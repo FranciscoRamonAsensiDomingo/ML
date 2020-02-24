@@ -34,7 +34,9 @@ void AAITrack::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
-
+void AAITrack::Init()
+{
+}
 void AAITrack::InitCenters() {
 	points[0] = SplinePoints[n_target - 1];
 	points[1] = SplinePoints[0];
@@ -80,7 +82,9 @@ void AAITrack::InitCircuitDistance()
 int AAITrack::CalcNearestPoint(const FVector & actorloc)
 {
 	FVector target;
-	float distance = 0.f, distance2 = 1000000000.f, newdistance;
+	float distance = 0.f;
+	float distance2 = 1000000000.0f;
+	float newdistance;
 	int point = 0;
 	bool state = true;
 

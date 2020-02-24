@@ -42,7 +42,7 @@ void AController_AI::BeginPlay()
 	importance_diversity2 = 1 / (importance_diversity + 1);
 	this->Initialize(); // Spawn objects
 
-	Cubes[0]->nnetwork = MyJsonHandler::Load_Network(RelativePath + "NNdata/test.json");
+	Cubes[0]->nnetwork = MyJsonHandler::Load_Network(RelativePath + "../NNdata/test.json");
 	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, FString::Printf(TEXT("first number:%f"), Cubes[0]->nnetwork.NNetwork[0][0][0]));
 
 	if (!player) {
@@ -119,7 +119,7 @@ void AController_AI::ReInitialize()
 		Cubes[i]->ResetMovement(GetActorTransform(), init_target);
 	}
 	if (player) {
-		MyJsonHandler::Write_DataTraining(PlayerTrace, RelativePath + "NNdata/training.json");
+		MyJsonHandler::Write_DataTraining(PlayerTrace, RelativePath + "../NNdata/training.json");
 	}
 }
 
@@ -188,7 +188,7 @@ void AController_AI::RefreshCarPosition()
 				if (Cubes[i]->laps > this->laps)
 					this->laps++;
 			}
-			GEngine->AddOnScreenDebugMessage(-1, refresh_frecuency, FColor::Green, FString::Printf(TEXT("Car #%i target: %i"), i, Cubes[i]->lastTarget));
+			GEngine->AddOnScreenDebugMessage(-1, refresh_frecuency, FColor::Green, FString::Printf(TEXT("Agent #%i target: %i"), i, Cubes[i]->lastTarget));
 			Cubes[i]->percentage = Cubes[i]->laps + OurTrack->CalcRectPosition(Cubes[i]->GetActorLocation(), Cubes[i]->lastTarget);// last implementation
 			//GEngine->AddOnScreenDebugMessage(-1, refresh_frecuency, FColor::Green, FString::Printf(TEXT("distance: %f / %f"), Cubes[i]->percentage*OurTrack->TotalDistance, OurTrack->TotalDistance));
 		}
@@ -299,12 +299,12 @@ void AController_AI::GA_Selection()
 	if (position[0] == population) {
 		selections[0].NNetwork = Cubes[position[1]]->nnetwork.NNetwork;
 		UE_LOG(LogTemp, Warning, TEXT("car_selected__:%i"), position[1]);
-		MyJsonHandler::Write_Network(Cubes[position[1]]->nnetwork, RelativePath + "NNdata/test.json");
+		MyJsonHandler::Write_Network(Cubes[position[1]]->nnetwork, RelativePath + "../NNdata/test.json");
 	}
 	else {
 		selections[0].NNetwork = Cubes[position[0]]->nnetwork.NNetwork;
 		UE_LOG(LogTemp, Warning, TEXT("car_selected:%i"), position[0]);
-		MyJsonHandler::Write_Network(Cubes[position[0]]->nnetwork, RelativePath + "NNdata/test.json");
+		MyJsonHandler::Write_Network(Cubes[position[0]]->nnetwork, RelativePath + "../NNdata/test.json");
 	}
 
 	float n;
